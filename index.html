@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080910">
+  <meta name="description" content="Documentation and getting started guide for Xen0 Executor.">
+  <title>Xen0 UI — Documentation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+*{box-sizing:border-box}
+:root{--bg:#080910;--panel:#0e101b;--panel-soft:#151827;--line:rgba(198,201,230,.15);--text:#f2f2f8;--muted:#a6aabd;--purple:#c3b5ff;--cyan:#76e5dc;--mono:'DM Mono',monospace;--sans:'Manrope',sans-serif}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.7;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.starfield{position:absolute;inset:0 0 auto;height:1000px;pointer-events:none;opacity:.52;background-image:radial-gradient(2px 2px at 8% 16%,#cbd1fa 45%,transparent 55%),radial-gradient(2px 2px at 19% 44%,#aeb7d8 45%,transparent 55%),radial-gradient(3px 3px at 30% 9%,#d5d8ed 45%,transparent 55%),radial-gradient(2px 2px at 43% 25%,#b7b9d1 45%,transparent 55%),radial-gradient(2px 2px at 60% 13%,#d4d9f0 45%,transparent 55%),radial-gradient(3px 3px at 77% 37%,#b8c2df 45%,transparent 55%),radial-gradient(2px 2px at 91% 19%,#d2d4eb 45%,transparent 55%),radial-gradient(2px 2px at 70% 57%,#c4c9e1 45%,transparent 55%),radial-gradient(2px 2px at 13% 70%,#c5c8df 45%,transparent 55%),radial-gradient(2px 2px at 88% 79%,#b9bed7 45%,transparent 55%),radial-gradient(1px 1px at 52% 62%,#fff 45%,transparent 55%),radial-gradient(1px 1px at 34% 72%,#fff 45%,transparent 55%);background-size:370px 290px,510px 420px,640px 510px,480px 370px,710px 430px,560px 370px,620px 460px,760px 560px,590px 490px,680px 430px,310px 260px,430px 340px;mask-image:linear-gradient(#000 0%,rgba(0,0,0,.78) 72%,transparent 100%)}
+.topbar{height:96px;max-width:1290px;margin:auto;padding:0 28px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:3}
+.brand{display:inline-flex;align-items:center;gap:13px}.brand-mark{width:41px;height:41px;border:1px solid rgba(206,211,255,.4);border-radius:13px;display:grid;place-items:center;color:#e9e6ff;font-size:20px;background:linear-gradient(145deg,#242a40,#10121c);box-shadow:0 0 24px rgba(150,143,255,.12)}.brand-name{font-size:16px;font-weight:800;letter-spacing:.09em}.brand-name span{font-size:13px;font-weight:700;color:#d9dbea;letter-spacing:.12em;margin-left:3px}
+.topnav{display:flex;align-items:center;gap:36px;color:#d4d6e1;font-size:14px}.topnav>a:not(.nav-button):hover,.side-link:hover{color:var(--cyan)}.nav-button{border:1px solid rgba(225,226,242,.35);border-radius:14px;padding:12px 22px;font-weight:700;background:rgba(255,255,255,.06);transition:.2s}.nav-button:hover,.button:hover{transform:translateY(-2px);border-color:rgba(118,229,220,.7)}.nav-button span{margin-left:8px;color:var(--cyan)}.menu-toggle{display:none}
+.hero{position:relative;min-height:644px;padding:108px 24px 55px;display:flex;align-items:center;flex-direction:column;text-align:center;overflow:hidden}.hero-glow{position:absolute;width:520px;height:340px;top:190px;left:50%;transform:translateX(-50%);background:radial-gradient(ellipse,rgba(143,133,255,.14),rgba(70,90,145,.06) 40%,transparent 72%);filter:blur(22px);pointer-events:none}.status-pill{position:relative;z-index:1;border:1px solid rgba(216,218,239,.21);background:rgba(255,255,255,.055);border-radius:30px;padding:7px 14px;font-size:11px;letter-spacing:.14em;font-weight:800;color:#d1d3e6}.status-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#72e8c7;box-shadow:0 0 14px #72e8c7;margin-right:8px}.hero h1{position:relative;margin:32px 0 19px;font-size:clamp(76px,10vw,128px);line-height:1.02;letter-spacing:-.075em;font-weight:800}.hero h1>span{background:linear-gradient(100deg,#c5b6ff 7%,#b3c6f7 51%,#73e5dc 96%);-webkit-background-clip:text;background-clip:text;color:transparent}.hero-copy{max-width:660px;color:#c0c3d1;font-size:19px;line-height:1.75;margin:0}.hero-actions{display:flex;justify-content:center;gap:14px;margin-top:31px}.button{min-width:156px;min-height:56px;display:inline-flex;align-items:center;justify-content:center;gap:12px;padding:13px 20px;border:1px solid rgba(224,226,244,.35);border-radius:14px;background:rgba(255,255,255,.065);font-weight:800;transition:.2s}.button span{font-size:17px}.button-primary{background:linear-gradient(110deg,rgba(173,155,255,.2),rgba(104,215,215,.14));border-color:rgba(212,214,243,.66)}.button-primary span{color:var(--cyan)}.download-link{margin-top:18px}.scroll-cue{position:absolute;bottom:15px;color:#80869d;font-family:var(--mono);font-size:9px;letter-spacing:.15em;display:flex;align-items:center;gap:10px}.scroll-cue span{height:22px;width:13px;border:1px solid #656b83;border-radius:10px;position:relative}.scroll-cue span:after{content:'';position:absolute;width:2px;height:5px;border-radius:2px;background:var(--cyan);top:4px;left:5px}
+.overview-panel,.docs-layout{max-width:1290px;margin:0 auto 80px;border:1px solid var(--line);border-radius:27px;background:radial-gradient(ellipse at 50% 8%,rgba(111,119,180,.09),transparent 46%),rgba(14,16,27,.96);box-shadow:0 26px 80px rgba(0,0,0,.24)}.overview-panel{padding:50px 52px;display:grid;grid-template-columns:.92fr 1.08fr;gap:64px;align-items:center}.eyebrow,.section-kicker,.sidebar-heading{font-family:var(--mono);font-size:11px;letter-spacing:.15em;font-weight:500;color:var(--cyan)}.overview-copy h2{font-size:42px;line-height:1.2;letter-spacing:-.055em;margin:14px 0}.overview-copy h2 span{color:#c6c7d9}.overview-copy p,.section-copy{color:var(--muted);line-height:1.85}.overview-copy p{max-width:460px}.feature-stack{display:grid;gap:12px}.feature-card{display:flex;gap:16px;align-items:center;padding:17px 18px;border:1px solid rgba(209,212,236,.12);border-radius:17px;background:rgba(32,36,57,.64)}.feature-icon{width:42px;height:42px;flex:none;border:1px solid rgba(190,182,255,.2);border-radius:13px;background:rgba(181,169,255,.1);display:grid;place-items:center;color:#c9bbff;font-size:19px}.feature-card h3{font-size:14px;margin:0 0 2px}.feature-card p{font-size:12px;color:#a4a9bd;margin:0;line-height:1.6}.feature-arrow{margin-left:auto;color:var(--cyan)}
+.docs-layout{display:grid;grid-template-columns:250px minmax(0,1fr);overflow:hidden}.docs-sidebar{padding:42px 24px;border-right:1px solid var(--line);background:rgba(8,10,17,.32)}.sidebar-heading{color:#8d93aa;margin:2px 0 20px 10px;font-size:10px}.side-link{padding:11px 10px;display:flex;align-items:center;gap:13px;color:#c0c3d2;border-radius:10px;font-size:13px;transition:.2s}.side-link span{font-family:var(--mono);color:#777e96;font-size:10px}.side-link.active{background:rgba(180,169,255,.1);color:#dfd9ff}.side-link.active span{color:var(--cyan)}.sidebar-note{margin-top:35px;border-top:1px solid var(--line);padding:25px 10px 0}.note-spark{color:var(--cyan);font-size:18px}.sidebar-note strong{display:block;margin-top:10px;font-size:13px}.sidebar-note p{font-size:12px;color:#959bb1;line-height:1.7;margin:6px 0}
+.docs-content{padding:45px 54px 30px;min-width:0}.doc-section{padding:0 0 43px;margin:0 0 38px;border-bottom:1px solid rgba(208,210,234,.12);scroll-margin-top:30px}.doc-section:last-of-type{border:0;margin-bottom:5px}.doc-section h2{font-size:32px;line-height:1.25;letter-spacing:-.05em;margin:10px 0}.section-copy{margin:9px 0 20px;max-width:760px}.steps-grid,.principle-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:20px}.step-card,.principle-card{padding:17px;border:1px solid rgba(207,209,235,.14);border-radius:15px;background:rgba(255,255,255,.025)}.step-card>span,.principle-number{font-family:var(--mono);color:var(--cyan);font-size:11px}.step-card h3,.principle-card h3{font-size:13px;margin:10px 0 6px}.step-card p,.principle-card p{font-size:12px;color:#a3a8ba;line-height:1.7;margin:0}.note{display:flex;gap:12px;align-items:flex-start;margin-top:17px;padding:14px 16px;border:1px solid rgba(118,229,220,.16);border-radius:13px;background:rgba(118,229,220,.045)}.note-icon{width:20px;height:20px;flex:none;display:grid;place-items:center;border-radius:50%;border:1px solid rgba(118,229,220,.6);color:var(--cyan);font-family:var(--mono);font-size:12px}.note p{font-size:12px;color:#aeb3c5;margin:0;line-height:1.7}.note strong{color:#e7e8f0}.code-card{border:1px solid rgba(203,206,232,.15);border-radius:15px;overflow:hidden;background:#090b12}.code-header{height:47px;padding:0 14px;display:flex;align-items:center;gap:12px;border-bottom:1px solid rgba(203,206,232,.12);color:#9298ac;font-family:var(--mono);font-size:11px}.window-dots{display:flex;gap:5px}.window-dots i{width:7px;height:7px;background:#505369;border-radius:50%}.window-dots i:first-child{background:#dc7d90}.window-dots i:nth-child(2){background:#e4c46d}.window-dots i:nth-child(3){background:#72cfae}.copy-button{margin-left:auto;border:1px solid rgba(201,204,231,.2);border-radius:7px;background:rgba(255,255,255,.04);color:#cdd0df;padding:5px 11px;font:inherit;cursor:pointer}.copy-button:hover{color:var(--cyan);border-color:var(--cyan)}pre{margin:0;padding:18px 20px;overflow-x:auto;line-height:1.8;font-family:var(--mono);font-size:12px;color:#e3e3ed}.code-muted{color:#747c91}.code-purple{color:#c3aaff}.code-cyan{color:#85e4d8}.theme-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:22px 0 30px}.theme-option{display:flex;align-items:center;gap:14px;padding:14px;border:1px solid rgba(203,206,232,.15);border-radius:14px;background:rgba(255,255,255,.025)}.theme-option strong,.theme-option small{display:block}.theme-option strong{font-size:13px}.theme-option small{margin-top:2px;color:#969caf;font-size:11px}.theme-preview{width:68px;height:46px;flex:none;border:1px solid;border-radius:8px;padding:7px;display:flex;gap:4px;align-items:flex-start}.theme-preview i{width:6px;height:6px;border-radius:50%;background:#aaa}.theme-preview i:first-child{background:#c3b5ff}.theme-light .theme-preview{background:#f3f3f8;border-color:#d2d4e1}.theme-light .theme-preview i{background:#b9bbca}.theme-light .theme-preview i:first-child{background:#9382df}.theme-dark .theme-preview{background:#171a28;border-color:#41465f}.theme-dark .theme-preview i{background:#626982}.theme-dark .theme-preview i:first-child{background:#76e5dc}.lua-example{margin-top:25px}.example-heading{display:flex;align-items:flex-start;gap:13px;margin-bottom:11px}.example-heading>span{width:28px;height:28px;flex:none;display:grid;place-items:center;border:1px solid rgba(118,229,220,.3);border-radius:9px;background:rgba(118,229,220,.07);color:var(--cyan);font-family:var(--mono);font-size:10px}.example-heading h3{margin:0;font-size:15px}.example-heading p{margin:3px 0 0;color:#9fa5b8;font-size:12px;line-height:1.65}.example-heading code{color:#d5caff;font-family:var(--mono);font-size:11px}.faq-item{border:1px solid rgba(203,206,232,.13);border-radius:12px;background:rgba(255,255,255,.025);margin-top:10px;padding:14px 16px}.faq-item summary{cursor:pointer;font-size:13px;font-weight:700;list-style:none}.faq-item summary::-webkit-details-marker{display:none}.faq-item summary:after{content:'+';float:right;color:var(--cyan);font-size:17px}.faq-item[open] summary:after{content:'−'}.faq-item p{margin:10px 0 0;color:#a4a9ba;font-size:12px;line-height:1.8}.page-footer{display:flex;justify-content:space-between;padding:23px 0 5px;color:#7f8499;font-family:var(--mono);font-size:10px;letter-spacing:.09em}.page-footer a:hover{color:var(--cyan)}
+@media(max-width:900px){.topbar{height:80px}.hero{min-height:600px;padding-top:100px}.overview-panel{margin-left:20px;margin-right:20px;padding:38px;gap:35px}.docs-layout{margin-left:20px;margin-right:20px;grid-template-columns:205px minmax(0,1fr)}.docs-content{padding:38px 32px}.docs-sidebar{padding:36px 17px}.steps-grid,.principle-grid{grid-template-columns:1fr}.step-card,.principle-card{padding:14px}.overview-copy h2{font-size:35px}}
+@media(max-width:650px){.topbar{padding:0 20px;height:72px}.brand-mark{width:37px;height:37px}.brand-name{font-size:14px}.brand-name span{font-size:11px}.menu-toggle{display:block;margin-left:auto;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.06);color:var(--text);padding:8px 11px;font-size:17px}.topnav{display:none;position:absolute;top:63px;left:15px;right:15px;padding:14px;background:#11131d;border:1px solid var(--line);border-radius:15px;flex-direction:column;align-items:stretch;gap:3px;box-shadow:0 18px 40px #0009}.topnav.open{display:flex}.topnav>a{padding:10px 12px}.nav-button{text-align:center;margin-top:5px}.hero{min-height:575px;padding:95px 20px 60px}.hero h1{font-size:clamp(68px,18vw,100px);margin:30px 0 17px}.hero-copy{font-size:16px;max-width:490px}.hero-actions{width:100%;max-width:340px;flex-direction:column;gap:10px;margin-top:25px}.button{min-height:49px}.scroll-cue{bottom:15px}.overview-panel{display:block;margin:0 14px 45px;padding:28px 22px;border-radius:20px}.overview-copy h2{font-size:34px}.feature-stack{margin-top:24px}.feature-card{padding:13px;gap:12px}.docs-layout{display:block;margin:0 14px 45px;border-radius:20px}.docs-sidebar{padding:20px 18px;border-right:0;border-bottom:1px solid var(--line);display:flex;gap:5px;overflow-x:auto;align-items:center}.sidebar-heading,.sidebar-note{display:none}.side-link{white-space:nowrap;padding:9px 11px;font-size:11px}.side-link span{display:none}.docs-content{padding:30px 20px}.doc-section{padding-bottom:30px;margin-bottom:27px}.doc-section h2{font-size:28px}.section-copy{font-size:13px}.theme-options{grid-template-columns:1fr}.steps-grid,.principle-grid{gap:9px}.page-footer{gap:12px;flex-wrap:wrap;font-size:9px}.starfield{height:800px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
+  </style>
+</head>
+<body>
+  <div class="starfield" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="Xen0 Executor home">
+      <span class="brand-mark" aria-hidden="true">✦</span>
+      <span class="brand-name">XENO <span>UI</span></span>
+    </a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+    <nav class="topnav" id="topnav" aria-label="Main navigation">
+      <a href="#top">Home</a>
+      <a href="#features">Features</a>
+      <a href="#faq">FAQ</a>
+      <a class="nav-button" href="#installation">Get started <span aria-hidden="true">↗</span></a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="status-pill"><span class="status-dot"></span> PRECISION IN EVERY SESSION</div>
+      <h1 id="hero-title">Xen0<br><span>UI</span></h1>
+      <p class="hero-copy">A refined, dependable execution experience—built for speed, clarity, and complete control of your workflow.</p>
+      <div class="hero-actions">
+        <a class="button button-secondary" href="#lua-examples">Lua scripts <span aria-hidden="true">↗</span></a>
+        <a class="button button-primary" href="#installation">Get started <span aria-hidden="true">↓</span></a>
+        <a class="button button-secondary" href="#features">Explore features <span aria-hidden="true">→</span></a>
+      </div>
+      <a class="scroll-cue" href="#documentation"><span></span> SCROLL TO EXPLORE</a>
+    </section>
+
+    <section class="overview-panel" id="features" aria-labelledby="features-title">
+      <div class="overview-copy">
+        <div class="eyebrow">BUILT FOR FOCUS</div>
+        <h2 id="features-title">Powerful tools.<br><span>Clear workflow.</span></h2>
+        <p>Everything you need to get started, organized in one place. Xen0 Executor is designed to keep your workflow straightforward and your experience focused.</p>
+      </div>
+      <div class="feature-stack">
+        <article class="feature-card"><span class="feature-icon">⌘</span><div><h3>Simple to get started</h3><p>Follow the setup guide and get your workspace ready in a few steps.</p></div><span class="feature-arrow">↗</span></article>
+        <article class="feature-card"><span class="feature-icon">◈</span><div><h3>A focused workspace</h3><p>Keep your scripts and session tools easy to access.</p></div><span class="feature-arrow">↗</span></article>
+        <article class="feature-card"><span class="feature-icon">✳</span><div><h3>Made to feel clear</h3><p>A considered interface puts clarity and control first.</p></div><span class="feature-arrow">↗</span></article>
+      </div>
+    </section>
+
+    <div class="docs-layout" id="documentation">
+      <aside class="docs-sidebar" aria-label="Documentation navigation">
+        <div class="sidebar-heading">DOCUMENTATION</div>
+        <a class="side-link active" href="#introduction"><span>01</span> Introduction</a>
+        <a class="side-link" href="#installation"><span>02</span> Installation</a>
+        <a class="side-link" href="#quick-start"><span>03</span> Quick start</a>
+        <a class="side-link" href="#workflow"><span>04</span> Workflow</a>
+        <a class="side-link" href="#lua-examples"><span>05</span> Lua examples</a>
+        <a class="side-link" href="#faq"><span>06</span> FAQ</a>
+        <div class="sidebar-note"><span class="note-spark">✦</span><strong>Stay in control.</strong><p>Start with the basics, then make the workflow your own.</p></div>
+      </aside>
+
+      <article class="docs-content">
+        <section class="doc-section" id="introduction">
+          <div class="section-kicker">WELCOME TO XEN0</div>
+          <h2>Documentation</h2>
+          <p class="section-copy">Use this guide to get familiar with Xen0 Executor, prepare your setup, and build a workflow that works for you. Start with installation, then follow the quick-start overview.</p>
+        </section>
+
+        <section class="doc-section" id="installation">
+          <div class="section-kicker">01 — SETUP</div>
+          <h2>Installation</h2>
+          <p class="section-copy">Download Xen0 Executor from the official source and follow the included setup instructions. Only use files and links you can verify as official.</p>
+          <div class="steps-grid">
+            <div class="step-card"><span>01</span><h3>Get the official release</h3><p>Use the project’s trusted release page. Avoid unofficial mirrors or repackaged downloads.</p></div>
+            <div class="step-card"><span>02</span><h3>Prepare your device</h3><p>Check the release notes and system requirements before you install.</p></div>
+            <div class="step-card"><span>03</span><h3>Follow setup guidance</h3><p>Open the included documentation and complete the setup steps for your platform.</p></div>
+          </div>
+          <div class="note"><span class="note-icon">i</span><p><strong>Stay safe.</strong> Never share account credentials, disable security protections, or run files from sources you don’t trust.</p></div>
+          <a class="button button-primary download-link" href="https://xenowebo.github.io/Home" target="_blank" rel="noopener noreferrer">Download Xen0 Executor <span aria-hidden="true">↗</span></a>
+        </section>
+
+        <section class="doc-section" id="quick-start">
+          <div class="section-kicker">02 — FIRST SESSION</div>
+          <h2>Quick start</h2>
+          <p class="section-copy">Once setup is complete, take a moment to explore the workspace. Keep your scripts organized and review what each script does before using it.</p>
+          <div class="code-card">
+            <div class="code-header"><div class="window-dots"><i></i><i></i><i></i></div><span>workflow.lua</span><button class="copy-button" type="button">Copy</button></div>
+            <pre><code>local Xen0UI = loadstring(game:HttpGet("https://githubusercontent.com/Xen0-UI/Xen0-UI/refs/heads/Xen0-UI.lua"))()</code></pre>
+          </div>
+        </section>
+
+        <section class="doc-section" id="workflow">
+          <div class="section-kicker">03 — WORK WITH CONFIDENCE</div>
+          <h2>A better workflow</h2>
+          <div class="principle-grid">
+            <div class="principle-card"><span class="principle-number">01</span><h3>Keep it organized</h3><p>Use clear names and group related scripts so your workspace stays easy to navigate.</p></div>
+            <div class="principle-card"><span class="principle-number">02</span><h3>Review before use</h3><p>Understand what a script does and use trusted sources to protect your device and accounts.</p></div>
+            <div class="principle-card"><span class="principle-number">03</span><h3>Know the rules</h3><p>Use software responsibly and follow the terms and policies of any platform you access.</p></div>
+          </div>
+        </section>
+
+        <section class="doc-section" id="lua-examples">
+          <div class="section-kicker">04 — BUILD YOUR UI</div>
+          <h2>Lua UI examples</h2>
+          <p class="section-copy">Build a simple interface one component at a time. Initialize <code>Xen0UI</code> through your trusted method, then copy the examples below in order. Each card has its own copy button.</p>
+
+          <div class="theme-options" aria-label="Available window themes">
+            <div class="theme-option theme-light"><span class="theme-preview"><i></i><i></i><i></i></span><span><strong>Light</strong><small>Bright, clean surfaces</small></span></div>
+            <div class="theme-option theme-dark"><span class="theme-preview"><i></i><i></i><i></i></span><span><strong>Dark</strong><small>Soft, low-light contrast</small></span></div>
+          </div>
+
+          <div class="lua-example">
+            <div class="example-heading"><span>01</span><div><h3>Create a window</h3><p>Choose either <code>"Light"</code> or <code>"Dark"</code> for the window theme.</p></div></div>
+            <div class="code-card">
+              <div class="code-header"><div class="window-dots"><i></i><i></i><i></i></div><span>window.lua</span><button class="copy-button" type="button">Copy</button></div>
+              <pre><code>local Window = Xen0UI:CreateWindow({
+    Name = "My Xen0 UI",
+    Theme = "Dark", -- Options: "Light" or "Dark"
+    LoadingTitle = "My Project",
+    LoadingSubtitle = "UI demo"
+})</code></pre>
+            </div>
+          </div>
+
+          <div class="lua-example">
+            <div class="example-heading"><span>02</span><div><h3>Add a tab and section</h3><p>Tabs keep related controls neatly grouped in your window.</p></div></div>
+            <div class="code-card">
+              <div class="code-header"><div class="window-dots"><i></i><i></i><i></i></div><span>tab.lua</span><button class="copy-button" type="button">Copy</button></div>
+              <pre><code>local Tab = Window:CreateTab("General")
+Tab:CreateSection("Basic controls")</code></pre>
+            </div>
+          </div>
+
+          <div class="lua-example">
+            <div class="example-heading"><span>03</span><div><h3>Button</h3><p>A simple button with a harmless demo callback.</p></div></div>
+            <div class="code-card">
+              <div class="code-header"><div class="window-dots"><i></i><i></i><i></i></div><span>button.lua</span><button class="copy-button" type="button">Copy</button></div>
+              <pre><code>Tab:CreateButton({
+    Name = "Say hello",
+    Callback = function()
+        print("Hello from my UI")
+    end,
+})</code></pre>
+            </div>
+          </div>
+
+          <div class="lua-example">
+            <div class="example-heading"><span>04</span><div><h3>Toggle</h3><p>Print the toggle state without changing anything in-game.</p></div></div>
+            <div class="code-card">
+              <div class="code-header"><div class="window-dots"><i></i><i></i><i></i></div><span>toggle.lua</span><button class="copy-button" type="button">Copy</button></div>
+              <pre><code>Tab:CreateToggle({
+    Name = "Demo toggle",
+    Current = false,
+    Callback = function(enabled)
+        print("Demo toggle:", enabled)
+    end,
+})</code></pre>
+            </div>
+          </div>
+
+          <div class="lua-example">
+            <div class="example-heading"><span>05</span><div><h3>Slider</h3><p>Try a value range and print the selected value.</p></div></div>
+            <div class="code-card">
+              <div class="code-header"><div class="window-dots"><i></i><i></i><i></i></div><span>slider.lua</span><button class="copy-button" type="button">Copy</button></div>
+              <pre><code>Tab:CreateSlider({
+    Name = "Example value",
+    Min = 1,
+    Max = 100,
+    Current = 25,
+    Callback = function(value)
+        print("Selected value:", value)
+    end,
+})</code></pre>
+            </div>
+          </div>
+
+          <div class="lua-example">
+            <div class="example-heading"><span>06</span><div><h3>Text input</h3><p>Capture text for a demo and print it.</p></div></div>
+            <div class="code-card">
+              <div class="code-header"><div class="window-dots"><i></i><i></i><i></i></div><span>input.lua</span><button class="copy-button" type="button">Copy</button></div>
+              <pre><code>Tab:CreateInput({
+    Name = "Project name",
+    PlaceholderText = "Type a name...",
+    Callback = function(text)
+        print("Project name:", text)
+    end,
+})</code></pre>
+            </div>
+          </div>
+
+          <div class="lua-example">
+            <div class="example-heading"><span>07</span><div><h3>Dropdown</h3><p>Offer a choice of themes and print the selection.</p></div></div>
+            <div class="code-card">
+              <div class="code-header"><div class="window-dots"><i></i><i></i><i></i></div><span>dropdown.lua</span><button class="copy-button" type="button">Copy</button></div>
+              <pre><code>Tab:CreateDropdown({
+    Name = "Color theme",
+    Options = {"Light", "Dark"},
+    Callback = function(selection)
+        print("Selected theme:", selection)
+    end,
+})</code></pre>
+            </div>
+          </div>
+
+          <div class="lua-example">
+            <div class="example-heading"><span>08</span><div><h3>Keybind</h3><p>Show a keybind callback with a harmless message.</p></div></div>
+            <div class="code-card">
+              <div class="code-header"><div class="window-dots"><i></i><i></i><i></i></div><span>keybind.lua</span><button class="copy-button" type="button">Copy</button></div>
+              <pre><code>Tab:CreateKeybind({
+    Name = "Demo shortcut",
+    CurrentKey = Enum.KeyCode.K,
+    MasterMinimize = false,
+    Callback = function()
+        print("Demo shortcut pressed")
+    end,
+})</code></pre>
+            </div>
+          </div>
+
+          <div class="note"><span class="note-icon">i</span><p><strong>Demo snippets:</strong> callbacks only print messages; they do not change gameplay or interact with other players. The examples assume <code>Xen0UI</code> has already been initialized.</p></div>
+        </section>
+
+        <section class="doc-section faq-section" id="faq">
+          <div class="section-kicker">05 — GOOD TO KNOW</div>
+          <h2>Frequently asked questions</h2>
+          <details class="faq-item"><summary>Where should I download Xen0 Executor?</summary><p>Use only the official Xen0 project page or a release source linked directly by the project. Be cautious of copycat sites and unofficial downloads.</p></details>
+          <details class="faq-item"><summary>Where do I find help with setup?</summary><p>Check the release notes and official project documentation first. Include your device and the exact step you’re having trouble with when asking for support.</p></details>
+          <details class="faq-item"><summary>Can I use any script I find online?</summary><p>No. Review scripts before use and only use sources you trust. Never paste code that asks for your password, tokens, or other private information.</p></details>
+        </section>
+        <footer class="page-footer"><span>© 2024 XENO EXECUTOR</span><a href="#top">BACK TO TOP ↑</a></footer>
+      </article>
+    </div>
+  </main>
+  <script>
+const menuToggle = document.getElementById('menuToggle');
+const topnav = document.getElementById('topnav');
+
+menuToggle.addEventListener('click', () => {
+  const isOpen = topnav.classList.toggle('open');
+  menuToggle.setAttribute('aria-expanded', String(isOpen));
+});
+
+topnav.querySelectorAll('a').forEach((link) => {
+  link.addEventListener('click', () => {
+    topnav.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+  });
+});
+
+document.querySelectorAll('.copy-button').forEach((button) => {
+  button.addEventListener('click', async () => {
+    const text = button.closest('.code-card').querySelector('pre code').textContent;
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch {
+      const fallback = document.createElement('textarea');
+      fallback.value = text;
+      fallback.setAttribute('readonly', '');
+      fallback.style.position = 'fixed';
+      fallback.style.opacity = '0';
+      document.body.appendChild(fallback);
+      fallback.select();
+      const copied = document.execCommand('copy');
+      fallback.remove();
+      if (!copied) {
+        button.textContent = 'Select code';
+        window.setTimeout(() => { button.textContent = 'Copy'; }, 1600);
+        return;
+      }
+    }
+    button.textContent = 'Copied';
+    window.setTimeout(() => { button.textContent = 'Copy'; }, 1600);
+  });
+});
+
+const sections = [...document.querySelectorAll('.doc-section')];
+const sectionLinks = [...document.querySelectorAll('.side-link')];
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (!entry.isIntersecting) return;
+    sectionLinks.forEach((link) => {
+      link.classList.toggle('active', link.hash === `#${entry.target.id}`);
+    });
+  });
+}, { rootMargin: '-20% 0px -65% 0px' });
+sections.forEach((section) => observer.observe(section));
+  </script>
+</body>
+</html>
