@@ -1,313 +1,89 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#080910">
-  <meta name="description" content="Documentation and getting started guide for Xen0 Executor.">
-  <title>Xen0 UI — Documentation</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-*{box-sizing:border-box}
-:root{--bg:#080910;--panel:#0e101b;--panel-soft:#151827;--line:rgba(198,201,230,.15);--text:#f2f2f8;--muted:#a6aabd;--purple:#c3b5ff;--cyan:#76e5dc;--mono:'DM Mono',monospace;--sans:'Manrope',sans-serif}
-html{scroll-behavior:smooth;scroll-padding-top:90px}
-body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.7;overflow-x:hidden}
-a{color:inherit;text-decoration:none}
-.starfield{position:absolute;inset:0 0 auto;height:1000px;pointer-events:none;opacity:.52;background-image:radial-gradient(2px 2px at 8% 16%,#cbd1fa 45%,transparent 55%),radial-gradient(2px 2px at 19% 44%,#aeb7d8 45%,transparent 55%),radial-gradient(3px 3px at 30% 9%,#d5d8ed 45%,transparent 55%),radial-gradient(2px 2px at 43% 25%,#b7b9d1 45%,transparent 55%),radial-gradient(2px 2px at 60% 13%,#d4d9f0 45%,transparent 55%),radial-gradient(3px 3px at 77% 37%,#b8c2df 45%,transparent 55%),radial-gradient(2px 2px at 91% 19%,#d2d4eb 45%,transparent 55%),radial-gradient(2px 2px at 70% 57%,#c4c9e1 45%,transparent 55%),radial-gradient(2px 2px at 13% 70%,#c5c8df 45%,transparent 55%),radial-gradient(2px 2px at 88% 79%,#b9bed7 45%,transparent 55%),radial-gradient(1px 1px at 52% 62%,#fff 45%,transparent 55%),radial-gradient(1px 1px at 34% 72%,#fff 45%,transparent 55%);background-size:370px 290px,510px 420px,640px 510px,480px 370px,710px 430px,560px 370px,620px 460px,760px 560px,590px 490px,680px 430px,310px 260px,430px 340px;mask-image:linear-gradient(#000 0%,rgba(0,0,0,.78) 72%,transparent 100%)}
-.topbar{height:96px;max-width:1290px;margin:auto;padding:0 28px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:3}
-.brand{display:inline-flex;align-items:center;gap:13px}.brand-mark{width:41px;height:41px;border:1px solid rgba(206,211,255,.4);border-radius:13px;display:grid;place-items:center;color:#e9e6ff;font-size:20px;background:linear-gradient(145deg,#242a40,#10121c);box-shadow:0 0 24px rgba(150,143,255,.12)}.brand-name{font-size:16px;font-weight:800;letter-spacing:.09em}.brand-name span{font-size:13px;font-weight:700;color:#d9dbea;letter-spacing:.12em;margin-left:3px}
-.topnav{display:flex;align-items:center;gap:36px;color:#d4d6e1;font-size:14px}.topnav>a:not(.nav-button):hover,.side-link:hover{color:var(--cyan)}.nav-button{border:1px solid rgba(225,226,242,.35);border-radius:14px;padding:12px 22px;font-weight:700;background:rgba(255,255,255,.06);transition:.2s}.nav-button:hover,.button:hover{transform:translateY(-2px);border-color:rgba(118,229,220,.7)}.nav-button span{margin-left:8px;color:var(--cyan)}.menu-toggle{display:none}
-.hero{position:relative;min-height:644px;padding:108px 24px 55px;display:flex;align-items:center;flex-direction:column;text-align:center;overflow:hidden}.hero-glow{position:absolute;width:520px;height:340px;top:190px;left:50%;transform:translateX(-50%);background:radial-gradient(ellipse,rgba(143,133,255,.14),rgba(70,90,145,.06) 40%,transparent 72%);filter:blur(22px);pointer-events:none}.status-pill{position:relative;z-index:1;border:1px solid rgba(216,218,239,.21);background:rgba(255,255,255,.055);border-radius:30px;padding:7px 14px;font-size:11px;letter-spacing:.14em;font-weight:800;color:#d1d3e6}.status-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#72e8c7;box-shadow:0 0 14px #72e8c7;margin-right:8px}.hero h1{position:relative;margin:32px 0 19px;font-size:clamp(76px,10vw,128px);line-height:1.02;letter-spacing:-.075em;font-weight:800}.hero h1>span{background:linear-gradient(100deg,#c5b6ff 7%,#b3c6f7 51%,#73e5dc 96%);-webkit-background-clip:text;background-clip:text;color:transparent}.hero-copy{max-width:660px;color:#c0c3d1;font-size:19px;line-height:1.75;margin:0}.hero-actions{display:flex;justify-content:center;gap:14px;margin-top:31px}.button{min-width:156px;min-height:56px;display:inline-flex;align-items:center;justify-content:center;gap:12px;padding:13px 20px;border:1px solid rgba(224,226,244,.35);border-radius:14px;background:rgba(255,255,255,.065);font-weight:800;transition:.2s}.button span{font-size:17px}.button-primary{background:linear-gradient(110deg,rgba(173,155,255,.2),rgba(104,215,215,.14));border-color:rgba(212,214,243,.66)}.button-primary span{color:var(--cyan)}.download-link{margin-top:18px}.scroll-cue{position:absolute;bottom:15px;color:#80869d;font-family:var(--mono);font-size:9px;letter-spacing:.15em;display:flex;align-items:center;gap:10px}.scroll-cue span{height:22px;width:13px;border:1px solid #656b83;border-radius:10px;position:relative}.scroll-cue span:after{content:'';position:absolute;width:2px;height:5px;border-radius:2px;background:var(--cyan);top:4px;left:5px}
-.overview-panel,.docs-layout{max-width:1290px;margin:0 auto 80px;border:1px solid var(--line);border-radius:27px;background:radial-gradient(ellipse at 50% 8%,rgba(111,119,180,.09),transparent 46%),rgba(14,16,27,.96);box-shadow:0 26px 80px rgba(0,0,0,.24)}.overview-panel{padding:50px 52px;display:grid;grid-template-columns:.92fr 1.08fr;gap:64px;align-items:center}.eyebrow,.section-kicker,.sidebar-heading{font-family:var(--mono);font-size:11px;letter-spacing:.15em;font-weight:500;color:var(--cyan)}.overview-copy h2{font-size:42px;line-height:1.2;letter-spacing:-.055em;margin:14px 0}.overview-copy h2 span{color:#c6c7d9}.overview-copy p,.section-copy{color:var(--muted);line-height:1.85}.overview-copy p{max-width:460px}.feature-stack{display:grid;gap:12px}.feature-card{display:flex;gap:16px;align-items:center;padding:17px 18px;border:1px solid rgba(209,212,236,.12);border-radius:17px;background:rgba(32,36,57,.64)}.feature-icon{width:42px;height:42px;flex:none;border:1px solid rgba(190,182,255,.2);border-radius:13px;background:rgba(181,169,255,.1);display:grid;place-items:center;color:#c9bbff;font-size:19px}.feature-card h3{font-size:14px;margin:0 0 2px}.feature-card p{font-size:12px;color:#a4a9bd;margin:0;line-height:1.6}.feature-arrow{margin-left:auto;color:var(--cyan)}
-.docs-layout{display:grid;grid-template-columns:250px minmax(0,1fr);overflow:hidden}.docs-sidebar{padding:42px 24px;border-right:1px solid var(--line);background:rgba(8,10,17,.32)}.sidebar-heading{color:#8d93aa;margin:2px 0 20px 10px;font-size:10px}.side-link{padding:11px 10px;display:flex;align-items:center;gap:13px;color:#c0c3d2;border-radius:10px;font-size:13px;transition:.2s}.side-link span{font-family:var(--mono);color:#777e96;font-size:10px}.side-link.active{background:rgba(180,169,255,.1);color:#dfd9ff}.side-link.active span{color:var(--cyan)}.sidebar-note{margin-top:35px;border-top:1px solid var(--line);padding:25px 10px 0}.note-spark{color:var(--cyan);font-size:18px}.sidebar-note strong{display:block;margin-top:10px;font-size:13px}.sidebar-note p{font-size:12px;color:#959bb1;line-height:1.7;margin:6px 0}
-.docs-content{padding:45px 54px 30px;min-width:0}.doc-section{padding:0 0 43px;margin:0 0 38px;border-bottom:1px solid rgba(208,210,234,.12);scroll-margin-top:30px}.doc-section:last-of-type{border:0;margin-bottom:5px}.doc-section h2{font-size:32px;line-height:1.25;letter-spacing:-.05em;margin:10px 0}.section-copy{margin:9px 0 20px;max-width:760px}.steps-grid,.principle-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:20px}.step-card,.principle-card{padding:17px;border:1px solid rgba(207,209,235,.14);border-radius:15px;background:rgba(255,255,255,.025)}.step-card>span,.principle-number{font-family:var(--mono);color:var(--cyan);font-size:11px}.step-card h3,.principle-card h3{font-size:13px;margin:10px 0 6px}.step-card p,.principle-card p{font-size:12px;color:#a3a8ba;line-height:1.7;margin:0}.note{display:flex;gap:12px;align-items:flex-start;margin-top:17px;padding:14px 16px;border:1px solid rgba(118,229,220,.16);border-radius:13px;background:rgba(118,229,220,.045)}.note-icon{width:20px;height:20px;flex:none;display:grid;place-items:center;border-radius:50%;border:1px solid rgba(118,229,220,.6);color:var(--cyan);font-family:var(--mono);font-size:12px}.note p{font-size:12px;color:#aeb3c5;margin:0;line-height:1.7}.note strong{color:#e7e8f0}.code-card{border:1px solid rgba(203,206,232,.15);border-radius:15px;overflow:hidden;background:#090b12}.code-header{height:47px;padding:0 14px;display:flex;align-items:center;gap:12px;border-bottom:1px solid rgba(203,206,232,.12);color:#9298ac;font-family:var(--mono);font-size:11px}.window-dots{display:flex;gap:5px}.window-dots i{width:7px;height:7px;background:#505369;border-radius:50%}.window-dots i:first-child{background:#dc7d90}.window-dots i:nth-child(2){background:#e4c46d}.window-dots i:nth-child(3){background:#72cfae}.copy-button{margin-left:auto;border:1px solid rgba(201,204,231,.2);border-radius:7px;background:rgba(255,255,255,.04);color:#cdd0df;padding:5px 11px;font:inherit;cursor:pointer}.copy-button:hover{color:var(--cyan);border-color:var(--cyan)}pre{margin:0;padding:18px 20px;overflow-x:auto;line-height:1.8;font-family:var(--mono);font-size:12px;color:#e3e3ed}.code-muted{color:#747c91}.code-purple{color:#c3aaff}.code-cyan{color:#85e4d8}.theme-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:22px 0 30px}.theme-option{display:flex;align-items:center;gap:14px;padding:14px;border:1px solid rgba(203,206,232,.15);border-radius:14px;background:rgba(255,255,255,.025)}.theme-option strong,.theme-option small{display:block}.theme-option strong{font-size:13px}.theme-option small{margin-top:2px;color:#969caf;font-size:11px}.theme-preview{width:68px;height:46px;flex:none;border:1px solid;border-radius:8px;padding:7px;display:flex;gap:4px;align-items:flex-start}.theme-preview i{width:6px;height:6px;border-radius:50%;background:#aaa}.theme-preview i:first-child{background:#c3b5ff}.theme-light .theme-preview{background:#f3f3f8;border-color:#d2d4e1}.theme-light .theme-preview i{background:#b9bbca}.theme-light .theme-preview i:first-child{background:#9382df}.theme-dark .theme-preview{background:#171a28;border-color:#41465f}.theme-dark .theme-preview i{background:#626982}.theme-dark .theme-preview i:first-child{background:#76e5dc}.lua-example{margin-top:25px}.example-heading{display:flex;align-items:flex-start;gap:13px;margin-bottom:11px}.example-heading>span{width:28px;height:28px;flex:none;display:grid;place-items:center;border:1px solid rgba(118,229,220,.3);border-radius:9px;background:rgba(118,229,220,.07);color:var(--cyan);font-family:var(--mono);font-size:10px}.example-heading h3{margin:0;font-size:15px}.example-heading p{margin:3px 0 0;color:#9fa5b8;font-size:12px;line-height:1.65}.example-heading code{color:#d5caff;font-family:var(--mono);font-size:11px}.faq-item{border:1px solid rgba(203,206,232,.13);border-radius:12px;background:rgba(255,255,255,.025);margin-top:10px;padding:14px 16px}.faq-item summary{cursor:pointer;font-size:13px;font-weight:700;list-style:none}.faq-item summary::-webkit-details-marker{display:none}.faq-item summary:after{content:'+';float:right;color:var(--cyan);font-size:17px}.faq-item[open] summary:after{content:'−'}.faq-item p{margin:10px 0 0;color:#a4a9ba;font-size:12px;line-height:1.8}.page-footer{display:flex;justify-content:space-between;padding:23px 0 5px;color:#7f8499;font-family:var(--mono);font-size:10px;letter-spacing:.09em}.page-footer a:hover{color:var(--cyan)}
-@media(max-width:900px){.topbar{height:80px}.hero{min-height:600px;padding-top:100px}.overview-panel{margin-left:20px;margin-right:20px;padding:38px;gap:35px}.docs-layout{margin-left:20px;margin-right:20px;grid-template-columns:205px minmax(0,1fr)}.docs-content{padding:38px 32px}.docs-sidebar{padding:36px 17px}.steps-grid,.principle-grid{grid-template-columns:1fr}.step-card,.principle-card{padding:14px}.overview-copy h2{font-size:35px}}
-@media(max-width:650px){.topbar{padding:0 20px;height:72px}.brand-mark{width:37px;height:37px}.brand-name{font-size:14px}.brand-name span{font-size:11px}.menu-toggle{display:block;margin-left:auto;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.06);color:var(--text);padding:8px 11px;font-size:17px}.topnav{display:none;position:absolute;top:63px;left:15px;right:15px;padding:14px;background:#11131d;border:1px solid var(--line);border-radius:15px;flex-direction:column;align-items:stretch;gap:3px;box-shadow:0 18px 40px #0009}.topnav.open{display:flex}.topnav>a{padding:10px 12px}.nav-button{text-align:center;margin-top:5px}.hero{min-height:575px;padding:95px 20px 60px}.hero h1{font-size:clamp(68px,18vw,100px);margin:30px 0 17px}.hero-copy{font-size:16px;max-width:490px}.hero-actions{width:100%;max-width:340px;flex-direction:column;gap:10px;margin-top:25px}.button{min-height:49px}.scroll-cue{bottom:15px}.overview-panel{display:block;margin:0 14px 45px;padding:28px 22px;border-radius:20px}.overview-copy h2{font-size:34px}.feature-stack{margin-top:24px}.feature-card{padding:13px;gap:12px}.docs-layout{display:block;margin:0 14px 45px;border-radius:20px}.docs-sidebar{padding:20px 18px;border-right:0;border-bottom:1px solid var(--line);display:flex;gap:5px;overflow-x:auto;align-items:center}.sidebar-heading,.sidebar-note{display:none}.side-link{white-space:nowrap;padding:9px 11px;font-size:11px}.side-link span{display:none}.docs-content{padding:30px 20px}.doc-section{padding-bottom:30px;margin-bottom:27px}.doc-section h2{font-size:28px}.section-copy{font-size:13px}.theme-options{grid-template-columns:1fr}.steps-grid,.principle-grid{gap:9px}.page-footer{gap:12px;flex-wrap:wrap;font-size:9px}.starfield{height:800px}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
-  </style>
-</head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090b10"><title>Xen0 UI — Documentation</title>
+<style>
+:root{color-scheme:dark;--bg:#080a0f;--panel:#10141b;--panel2:#151b23;--line:#303a47;--silver:#dce5ee;--muted:#9aa8b7;--blue:#8edcff;--blue2:#4da9d6;--text:#f2f6fa;--code:#090d12}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:90px}body{margin:0;background:radial-gradient(ellipse at 75% -15%,#1c3b50 0,transparent 36%),radial-gradient(ellipse at 5% 30%,#17202c 0,transparent 30%),var(--bg);color:var(--text);font:15px/1.65 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}a{color:var(--blue);text-decoration:none}a:hover{color:white}.top{position:sticky;top:0;z-index:5;backdrop-filter:blur(16px);background:#090c12d9;border-bottom:1px solid #ffffff16}.topin{height:68px;max-width:1380px;margin:auto;padding:0 26px;display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.13em}.mark{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#fff,#9eabb8 42%,#34414e 70%,#eaf7ff);box-shadow:0 0 22px #83d8ff28;display:grid;place-items:center;color:#111820;font-weight:900}.brand small{display:block;color:var(--muted);font-size:10px;letter-spacing:.2em;font-weight:600}.pill{border:1px solid #b7d8ed50;background:#8edcff0c;color:#bfeaff;padding:7px 12px;border-radius:999px;font-size:12px}.layout{max-width:1380px;margin:auto;display:grid;grid-template-columns:255px minmax(0,1fr);gap:42px;padding:34px 26px 90px}.sidebar{position:sticky;top:94px;height:calc(100vh - 120px);overflow:auto;border-right:1px solid #ffffff12;padding:4px 22px 24px 0}.navlabel{font-size:10px;color:#8292a2;letter-spacing:.2em;font-weight:800;margin:24px 0 8px}.navlabel:first-child{margin-top:0}.nav a{display:block;padding:8px 12px;margin:3px 0;color:#aab6c4;border:1px solid transparent;border-radius:9px;font-size:13px}.nav a:hover,.nav a.active{background:linear-gradient(90deg,#8edcff16,transparent);border-color:#8edcff26;color:#f4fbff}.nav a.active{box-shadow:inset 2px 0 #8edcff}.content{min-width:0;max-width:900px}.hero{padding:22px 0 34px;border-bottom:1px solid #ffffff17;margin-bottom:36px;position:relative}.eyebrow{font-size:11px;letter-spacing:.25em;color:var(--blue);font-weight:800}.hero h1{font-size:clamp(38px,6vw,66px);letter-spacing:-.055em;line-height:1.04;margin:12px 0 18px;background:linear-gradient(110deg,#fff 5%,#b7c6d4 34%,#f5fdff 52%,#7dbbd8 72%,#eef7ff 90%);background-size:200% auto;color:transparent;background-clip:text;animation:shine 9s linear infinite}.hero p{max-width:680px;color:#aab8c6;font-size:17px}.hero .orb{position:absolute;right:5%;top:20px;width:130px;height:130px;border-radius:50%;background:radial-gradient(circle at 32% 25%,#fff 0,#b7c9d6 13%,#536c7d 33%,#111c27 62%,#06080c 74%);box-shadow:0 0 60px #66cfff20,inset -15px -15px 24px #000b;opacity:.85}@keyframes shine{to{background-position:200% center}}.stats{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.stat{padding:9px 12px;border:1px solid #ffffff18;border-radius:9px;background:#ffffff05;color:#b6c3cf;font-size:12px}.section{margin:38px 0 50px}.section h2{font-size:26px;letter-spacing:-.03em;margin:0 0 8px}.section>p{color:#a8b5c3;margin:0 0 20px}.section h3{font-size:17px;margin:26px 0 8px}.card{border:1px solid var(--line);border-radius:14px;background:linear-gradient(145deg,#151b23e8,#0e1218ed);padding:20px;margin:16px 0;box-shadow:0 12px 35px #0002}.cardhead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.card h3{margin:0;font-size:18px}.tag{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--blue);border:1px solid #8edcff35;background:#8edcff0b;border-radius:5px;padding:3px 7px}.sig{font:13px ui-monospace,SFMono-Regular,Consolas,monospace;color:#d8e8f4;background:#080d13;border:1px solid #273544;padding:12px 14px;border-radius:8px;overflow-x:auto;white-space:pre;margin:14px 0}.desc{color:#aab6c3;margin:12px 0}.params{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0}.params th{text-align:left;color:#91a4b6;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.1em}.params th,.params td{padding:10px 9px;border-bottom:1px solid #ffffff12;vertical-align:top}.params code{color:#c5edff}.params td{color:#bdc8d3}.codebox{position:relative;margin:16px 0}.codebox pre{margin:0;white-space:pre;overflow:auto;padding:18px;background:var(--code);border:1px solid #293746;border-radius:11px;color:#d7e4ef;font:12px/1.75 ui-monospace,SFMono-Regular,Consolas,monospace}.copy{position:absolute;right:9px;top:9px;background:#18222d;border:1px solid #425364;border-radius:7px;padding:5px 9px;color:#d7e8f5;font-size:11px;cursor:pointer}.copy:hover{background:#243545}.note{border-left:3px solid var(--blue2);background:#6ccaff0b;padding:12px 15px;border-radius:0 8px 8px 0;color:#b9c8d5;font-size:13px;margin:16px 0}.warning{border-left-color:#e5c27d;background:#e5c27d0b}.footer{border-top:1px solid #ffffff16;padding-top:22px;color:#758596;font-size:12px;margin-top:60px}.mobilemenu{display:none;background:#101720;border:1px solid #344353;color:#dceaf5;border-radius:8px;padding:7px 10px}@media(max-width:850px){.layout{grid-template-columns:1fr;padding:20px 18px 60px}.sidebar{position:static;height:auto;border:1px solid #263340;border-radius:12px;padding:14px;margin-bottom:10px;display:none}.sidebar.open{display:block}.mobilemenu{display:block}.topin{padding:0 18px}.hero .orb{width:85px;height:85px;right:0;opacity:.5}.hero h1{max-width:80%}.layout{gap:18px}}@media(min-width:851px){.sidebar{display:block!important}}
+</style></head>
 <body>
-  <div class="starfield" aria-hidden="true"></div>
-  <header class="topbar">
-    <a class="brand" href="#top" aria-label="Xen0 Executor home">
-      <span class="brand-mark" aria-hidden="true">✦</span>
-      <span class="brand-name">XENO <span>UI</span></span>
-    </a>
-    <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
-    <nav class="topnav" id="topnav" aria-label="Main navigation">
-      <a href="#top">Home</a>
-      <a href="#features">Features</a>
-      <a href="#faq">FAQ</a>
-      <a class="nav-button" href="#installation">Get started <span aria-hidden="true">↗</span></a>
-    </nav>
-  </header>
+<header class="top"><div class="topin"><div class="brand"><div class="mark">X</div><div>XEN0 UI<small> SILVER SURFER / DOCUMENTATION</small></div></div><div style="display:flex;align-items:center;gap:12px"><span class="pill">API REFERENCE</span><button class="mobilemenu" id="menuBtn">☰ Menu</button></div></div></header>
+<div class="layout"><aside class="sidebar" id="sidebar"><nav class="nav"><div class="navlabel">GETTING STARTED</div><a class="active" href="#overview">Overview</a><a href="#quickstart">Quick start</a><a href="#window">Window</a><a href="#tabs">Tabs & sections</a><div class="navlabel">ELEMENTS</div><a href="#button">Button</a><a href="#toggle">Toggle</a><a href="#colorpicker">Colorpicker</a><a href="#slider">Slider</a><a href="#paragraph">Paragraph</a><a href="#bind">Bind</a><a href="#dropdown">Dropdown</a><div class="navlabel">UTILITIES</div><a href="#refresh">Refresh dropdown</a><a href="#destroy">Destroy</a><a href="#notes">Implementation notes</a></nav></aside>
+<main class="content"><section class="hero" id="overview"><div class="orb"></div><div class="eyebrow">COSMIC UI LIBRARY · API DOCS</div><h1>Ride the<br>Silver Surface.</h1><p>Documentation for building interfaces with Xen0 UI. A clean API reference wrapped in a chrome-silver, deep-space visual theme.</p><div class="stats"><span class="stat">◈ Window & tabs</span><span class="stat">◈ Interactive elements</span><span class="stat">◈ Lua examples</span></div></section>
+<section class="section" id="quickstart"><h2>Quick start</h2><p>Load the library, create a window, then add a tab and its elements. Replace the loader with your trusted distribution URL when sharing your project.</p><div class="codebox"><button class="copy">Copy</button><pre><code>local Xen0UI = loadstring(game:HttpGet("https://raw.githubusercontent.com/ui-01/01/01/01.lua"))()
 
-  <main id="top">
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="hero-glow" aria-hidden="true"></div>
-      <div class="status-pill"><span class="status-dot"></span> PRECISION IN EVERY SESSION</div>
-      <h1 id="hero-title">Xen0<br><span>UI</span></h1>
-      <p class="hero-copy">A refined, dependable execution experience—built for speed, clarity, and complete control of your workflow.</p>
-      <div class="hero-actions">
-        <a class="button button-secondary" href="#lua-examples">Lua scripts <span aria-hidden="true">↗</span></a>
-        <a class="button button-primary" href="#installation">Get started <span aria-hidden="true">↓</span></a>
-        <a class="button button-secondary" href="#features">Explore features <span aria-hidden="true">→</span></a>
-      </div>
-      <a class="scroll-cue" href="#documentation"><span></span> SCROLL TO EXPLORE</a>
-    </section>
+local Window = Xen0UI:MakeWindow({
+    Name = "Xen0 UI",
+    HidePremium = false,
+    SaveConfig = true,
+    ConfigFolder = "Xen0Test"
+})
 
-    <section class="overview-panel" id="features" aria-labelledby="features-title">
-      <div class="overview-copy">
-        <div class="eyebrow">BUILT FOR FOCUS</div>
-        <h2 id="features-title">Powerful tools.<br><span>Clear workflow.</span></h2>
-        <p>Everything you need to get started, organized in one place. Xen0 Executor is designed to keep your workflow straightforward and your experience focused.</p>
-      </div>
-      <div class="feature-stack">
-        <article class="feature-card"><span class="feature-icon">⌘</span><div><h3>Simple to get started</h3><p>Follow the setup guide and get your workspace ready in a few steps.</p></div><span class="feature-arrow">↗</span></article>
-        <article class="feature-card"><span class="feature-icon">◈</span><div><h3>A focused workspace</h3><p>Keep your scripts and session tools easy to access.</p></div><span class="feature-arrow">↗</span></article>
-        <article class="feature-card"><span class="feature-icon">✳</span><div><h3>Made to feel clear</h3><p>A considered interface puts clarity and control first.</p></div><span class="feature-arrow">↗</span></article>
-      </div>
-    </section>
+local Tab = Window:MakeTab({
+    Name = "Main",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
 
-    <div class="docs-layout" id="documentation">
-      <aside class="docs-sidebar" aria-label="Documentation navigation">
-        <div class="sidebar-heading">DOCUMENTATION</div>
-        <a class="side-link active" href="#introduction"><span>01</span> Introduction</a>
-        <a class="side-link" href="#installation"><span>02</span> Installation</a>
-        <a class="side-link" href="#quick-start"><span>03</span> Quick start</a>
-        <a class="side-link" href="#workflow"><span>04</span> Workflow</a>
-        <a class="side-link" href="#lua-examples"><span>05</span> Lua examples</a>
-        <a class="side-link" href="#faq"><span>06</span> FAQ</a>
-        <div class="sidebar-note"><span class="note-spark">✦</span><strong>Stay in control.</strong><p>Start with the basics, then make the workflow your own.</p></div>
-      </aside>
-
-      <article class="docs-content">
-        <section class="doc-section" id="introduction">
-          <div class="section-kicker">WELCOME TO XEN0</div>
-          <h2>Documentation</h2>
-          <p class="section-copy">Use this guide to get familiar with Xen0 Executor, prepare your setup, and build a workflow that works for you. Start with installation, then follow the quick-start overview.</p>
-        </section>
-
-        <section class="doc-section" id="installation">
-          <div class="section-kicker">01 — SETUP</div>
-          <h2>Installation</h2>
-          <p class="section-copy">Download Xen0 Executor from the official source and follow the included setup instructions. Only use files and links you can verify as official.</p>
-          <div class="steps-grid">
-            <div class="step-card"><span>01</span><h3>Get the official release</h3><p>Use the project’s trusted release page. Avoid unofficial mirrors or repackaged downloads.</p></div>
-            <div class="step-card"><span>02</span><h3>Prepare your device</h3><p>Check the release notes and system requirements before you install.</p></div>
-            <div class="step-card"><span>03</span><h3>Follow setup guidance</h3><p>Open the included documentation and complete the setup steps for your platform.</p></div>
-          </div>
-          <div class="note"><span class="note-icon">i</span><p><strong>Stay safe.</strong> Never share account credentials, disable security protections, or run files from sources you don’t trust.</p></div>
-          <a class="button button-primary download-link" href="https://xenowebo.github.io/Home" target="_blank" rel="noopener noreferrer">Download Xen0 Executor <span aria-hidden="true">↗</span></a>
-        </section>
-
-        <section class="doc-section" id="quick-start">
-          <div class="section-kicker">02 — FIRST SESSION</div>
-          <h2>Quick start</h2>
-          <p class="section-copy">Once setup is complete, take a moment to explore the workspace. Keep your scripts organized and review what each script does before using it.</p>
-          <div class="code-card">
-            <div class="code-header"><div class="window-dots"><i></i><i></i><i></i></div><span>workflow.lua</span><button class="copy-button" type="button">Copy</button></div>
-            <pre><code>local Xen0UI = loadstring(game:HttpGet("https://githubusercontent.com/Xen0-UI/Xen0-UI/refs/heads/Xen0-UI.lua"))()</code></pre>
-          </div>
-        </section>
-
-        <section class="doc-section" id="workflow">
-          <div class="section-kicker">03 — WORK WITH CONFIDENCE</div>
-          <h2>A better workflow</h2>
-          <div class="principle-grid">
-            <div class="principle-card"><span class="principle-number">01</span><h3>Keep it organized</h3><p>Use clear names and group related scripts so your workspace stays easy to navigate.</p></div>
-            <div class="principle-card"><span class="principle-number">02</span><h3>Review before use</h3><p>Understand what a script does and use trusted sources to protect your device and accounts.</p></div>
-            <div class="principle-card"><span class="principle-number">03</span><h3>Know the rules</h3><p>Use software responsibly and follow the terms and policies of any platform you access.</p></div>
-          </div>
-        </section>
-
-        <section class="doc-section" id="lua-examples">
-          <div class="section-kicker">04 — BUILD YOUR UI</div>
-          <h2>Lua UI examples</h2>
-          <p class="section-copy">Build a simple interface one component at a time. Initialize <code>Xen0UI</code> through your trusted method, then copy the examples below in order. Each card has its own copy button.</p>
-
-          <div class="theme-options" aria-label="Available window themes">
-            <div class="theme-option theme-light"><span class="theme-preview"><i></i><i></i><i></i></span><span><strong>Light</strong><small>Bright, clean surfaces</small></span></div>
-            <div class="theme-option theme-dark"><span class="theme-preview"><i></i><i></i><i></i></span><span><strong>Dark</strong><small>Soft, low-light contrast</small></span></div>
-          </div>
-
-          <div class="lua-example">
-            <div class="example-heading"><span>01</span><div><h3>Create a window</h3><p>Choose either <code>"Light"</code> or <code>"Dark"</code> for the window theme.</p></div></div>
-            <div class="code-card">
-              <div class="code-header"><div class="window-dots"><i></i><i></i><i></i></div><span>window.lua</span><button class="copy-button" type="button">Copy</button></div>
-              <pre><code>local Window = Xen0UI:CreateWindow({
-    Name = "My Xen0 UI",
-    Theme = "Dark", -- Options: "Light" or "Dark"
-    LoadingTitle = "My Project",
-    LoadingSubtitle = "UI demo"
-})</code></pre>
-            </div>
-          </div>
-
-          <div class="lua-example">
-            <div class="example-heading"><span>02</span><div><h3>Add a tab and section</h3><p>Tabs keep related controls neatly grouped in your window.</p></div></div>
-            <div class="code-card">
-              <div class="code-header"><div class="window-dots"><i></i><i></i><i></i></div><span>tab.lua</span><button class="copy-button" type="button">Copy</button></div>
-              <pre><code>local Tab = Window:CreateTab("General")
-Tab:CreateSection("Basic controls")</code></pre>
-            </div>
-          </div>
-
-          <div class="lua-example">
-            <div class="example-heading"><span>03</span><div><h3>Button</h3><p>A simple button with a harmless demo callback.</p></div></div>
-            <div class="code-card">
-              <div class="code-header"><div class="window-dots"><i></i><i></i><i></i></div><span>button.lua</span><button class="copy-button" type="button">Copy</button></div>
-              <pre><code>Tab:CreateButton({
-    Name = "Say hello",
+local Section = Tab:AddSection({ Name = "Scripts" })</code></pre></div><div class="note">The examples below follow the API shape in the snippet you provided. Confirm exact behavior against your library implementation before publishing these docs as a definitive reference.</div></section>
+<section class="section" id="window"><h2>Window</h2><p>Create the main Xen0 UI window and set its configuration options.</p><article class="card"><div class="cardhead"><h3><code>MakeWindow(options)</code></h3><span class="tag">Window</span></div><div class="sig">Xen0UI:MakeWindow({ Name, HidePremium, SaveConfig, ConfigFolder })</div><table class="params"><thead><tr><th>Option</th><th>Type</th><th>Example</th><th>Description</th></tr></thead><tbody><tr><td><code>Name</code></td><td>string</td><td>"Xen0 UI"</td><td>Title shown for the window.</td></tr><tr><td><code>HidePremium</code></td><td>boolean</td><td>false</td><td>Premium-related display option; exact behavior depends on implementation.</td></tr><tr><td><code>SaveConfig</code></td><td>boolean</td><td>true</td><td>Enables or disables config saving, if supported by the library.</td></tr><tr><td><code>ConfigFolder</code></td><td>string</td><td>"Xen0Test"</td><td>Folder name used for configuration storage.</td></tr></tbody></table></article></section>
+<section class="section" id="tabs"><h2>Tabs & sections</h2><article class="card"><div class="cardhead"><h3><code>MakeTab(options)</code></h3><span class="tag">Navigation</span></div><div class="sig">Window:MakeTab({ Name, Icon, PremiumOnly })</div><p class="desc">Adds a tab to the window and returns a tab object used to add UI elements.</p><table class="params"><tbody><tr><td><code>Name</code></td><td>string</td><td>Tab label.</td></tr><tr><td><code>Icon</code></td><td>string</td><td>Icon identifier or asset URI.</td></tr><tr><td><code>PremiumOnly</code></td><td>boolean</td><td>Whether the tab is marked premium-only.</td></tr></tbody></table></article><article class="card"><div class="cardhead"><h3><code>AddSection(options)</code></h3><span class="tag">Layout</span></div><div class="sig">Tab:AddSection({ Name = "Scripts" })</div><p class="desc">Adds a labeled section to organize related controls within a tab.</p><table class="params"><tbody><tr><td><code>Name</code></td><td>string</td><td>Section title.</td></tr></tbody></table></article></section>
+<section class="section" id="button"><h2>Button</h2><article class="card"><div class="cardhead"><h3><code>AddButton(options)</code></h3><span class="tag">Action</span></div><p class="desc">Creates a clickable button and calls the callback when activated.</p><div class="sig">Tab:AddButton({
+    Name = "This is a button!",
     Callback = function()
-        print("Hello from my UI")
-    end,
-})</code></pre>
-            </div>
-          </div>
-
-          <div class="lua-example">
-            <div class="example-heading"><span>04</span><div><h3>Toggle</h3><p>Print the toggle state without changing anything in-game.</p></div></div>
-            <div class="code-card">
-              <div class="code-header"><div class="window-dots"><i></i><i></i><i></i></div><span>toggle.lua</span><button class="copy-button" type="button">Copy</button></div>
-              <pre><code>Tab:CreateToggle({
-    Name = "Demo toggle",
-    Current = false,
-    Callback = function(enabled)
-        print("Demo toggle:", enabled)
-    end,
-})</code></pre>
-            </div>
-          </div>
-
-          <div class="lua-example">
-            <div class="example-heading"><span>05</span><div><h3>Slider</h3><p>Try a value range and print the selected value.</p></div></div>
-            <div class="code-card">
-              <div class="code-header"><div class="window-dots"><i></i><i></i><i></i></div><span>slider.lua</span><button class="copy-button" type="button">Copy</button></div>
-              <pre><code>Tab:CreateSlider({
-    Name = "Example value",
-    Min = 1,
-    Max = 100,
-    Current = 25,
-    Callback = function(value)
-        print("Selected value:", value)
-    end,
-})</code></pre>
-            </div>
-          </div>
-
-          <div class="lua-example">
-            <div class="example-heading"><span>06</span><div><h3>Text input</h3><p>Capture text for a demo and print it.</p></div></div>
-            <div class="code-card">
-              <div class="code-header"><div class="window-dots"><i></i><i></i><i></i></div><span>input.lua</span><button class="copy-button" type="button">Copy</button></div>
-              <pre><code>Tab:CreateInput({
-    Name = "Project name",
-    PlaceholderText = "Type a name...",
-    Callback = function(text)
-        print("Project name:", text)
-    end,
-})</code></pre>
-            </div>
-          </div>
-
-          <div class="lua-example">
-            <div class="example-heading"><span>07</span><div><h3>Dropdown</h3><p>Offer a choice of themes and print the selection.</p></div></div>
-            <div class="code-card">
-              <div class="code-header"><div class="window-dots"><i></i><i></i><i></i></div><span>dropdown.lua</span><button class="copy-button" type="button">Copy</button></div>
-              <pre><code>Tab:CreateDropdown({
-    Name = "Color theme",
-    Options = {"Light", "Dark"},
-    Callback = function(selection)
-        print("Selected theme:", selection)
-    end,
-})</code></pre>
-            </div>
-          </div>
-
-          <div class="lua-example">
-            <div class="example-heading"><span>08</span><div><h3>Keybind</h3><p>Show a keybind callback with a harmless message.</p></div></div>
-            <div class="code-card">
-              <div class="code-header"><div class="window-dots"><i></i><i></i><i></i></div><span>keybind.lua</span><button class="copy-button" type="button">Copy</button></div>
-              <pre><code>Tab:CreateKeybind({
-    Name = "Demo shortcut",
-    CurrentKey = Enum.KeyCode.K,
-    MasterMinimize = false,
+        print("hello")
+    end
+})</div><table class="params"><tbody><tr><td><code>Name</code></td><td>string</td><td>Text displayed on the button.</td></tr><tr><td><code>Callback</code></td><td>function</td><td>Function invoked when clicked.</td></tr></tbody></table></article></section>
+<section class="section" id="toggle"><h2>Toggle</h2><article class="card"><div class="cardhead"><h3><code>AddToggle(options)</code></h3><span class="tag">Boolean</span></div><p class="desc">Adds an on/off control. The callback receives the new boolean value.</p><div class="sig">Tab:AddToggle({
+    Name = "This is a toggle!",
+    Default = false,
+    Callback = function(Value)
+        print(Value)
+    end
+})</div><table class="params"><tbody><tr><td><code>Name</code></td><td>string</td><td>Toggle label.</td></tr><tr><td><code>Default</code></td><td>boolean</td><td>Initial on/off state.</td></tr><tr><td><code>Callback</code></td><td>function(Value)</td><td>Called with the current boolean state.</td></tr></tbody></table></article></section>
+<section class="section" id="colorpicker"><h2>Colorpicker</h2><article class="card"><div class="cardhead"><h3><code>AddColorpicker(options)</code></h3><span class="tag">Color</span></div><p class="desc">Adds a color selection control. The callback receives a Color3 value.</p><div class="sig">Tab:AddColorpicker({
+    Name = "Colorpicker",
+    Default = Color3.fromRGB(255, 0, 0),
+    Callback = function(Value)
+        print(Value)
+    end
+})</div><table class="params"><tbody><tr><td><code>Name</code></td><td>string</td><td>Control label.</td></tr><tr><td><code>Default</code></td><td>Color3</td><td>Initial color.</td></tr><tr><td><code>Callback</code></td><td>function(Value)</td><td>Called with the selected color.</td></tr></tbody></table></article></section>
+<section class="section" id="slider"><h2>Slider</h2><article class="card"><div class="cardhead"><h3><code>AddSlider(options)</code></h3><span class="tag">Number</span></div><p class="desc">Lets the user choose a number within a configured range.</p><div class="sig">Tab:AddSlider({
+    Name = "Slider",
+    Min = 0,
+    Max = 20,
+    Default = 5,
+    Color = Color3.fromRGB(255, 255, 255),
+    Increment = 1,
+    ValueName = "bananas",
+    Callback = function(Value)
+        print(Value)
+    end
+})</div><table class="params"><tbody><tr><td><code>Name</code></td><td>string</td><td>Slider label.</td></tr><tr><td><code>Min / Max</code></td><td>number</td><td>Lower and upper bounds.</td></tr><tr><td><code>Default</code></td><td>number</td><td>Initial value.</td></tr><tr><td><code>Color</code></td><td>Color3</td><td>Slider accent color.</td></tr><tr><td><code>Increment</code></td><td>number</td><td>Step between values.</td></tr><tr><td><code>ValueName</code></td><td>string</td><td>Unit or suffix shown beside the value.</td></tr><tr><td><code>Callback</code></td><td>function(Value)</td><td>Called with the selected number.</td></tr></tbody></table></article></section>
+<section class="section" id="paragraph"><h2>Paragraph</h2><article class="card"><div class="cardhead"><h3><code>AddParagraph(title, content)</code></h3><span class="tag">Text</span></div><p class="desc">Displays informational text inside a tab.</p><div class="sig">Tab:AddParagraph("Paragraph", "Paragraph Content")</div><table class="params"><tbody><tr><td><code>title</code></td><td>string</td><td>Heading for the paragraph.</td></tr><tr><td><code>content</code></td><td>string</td><td>Body text to display.</td></tr></tbody></table></article></section>
+<section class="section" id="bind"><h2>Bind</h2><article class="card"><div class="cardhead"><h3><code>AddBind(options)</code></h3><span class="tag">Keyboard</span></div><p class="desc">Adds a keyboard binding. The example uses the E key and a non-hold behavior.</p><div class="sig">Tab:AddBind({
+    Name = "Bind",
+    Default = Enum.KeyCode.E,
+    Hold = false,
     Callback = function()
-        print("Demo shortcut pressed")
-    end,
-})</code></pre>
-            </div>
-          </div>
-
-          <div class="note"><span class="note-icon">i</span><p><strong>Demo snippets:</strong> callbacks only print messages; they do not change gameplay or interact with other players. The examples assume <code>Xen0UI</code> has already been initialized.</p></div>
-        </section>
-
-        <section class="doc-section faq-section" id="faq">
-          <div class="section-kicker">05 — GOOD TO KNOW</div>
-          <h2>Frequently asked questions</h2>
-          <details class="faq-item"><summary>Where should I download Xen0 Executor?</summary><p>Use only the official Xen0 project page or a release source linked directly by the project. Be cautious of copycat sites and unofficial downloads.</p></details>
-          <details class="faq-item"><summary>Where do I find help with setup?</summary><p>Check the release notes and official project documentation first. Include your device and the exact step you’re having trouble with when asking for support.</p></details>
-          <details class="faq-item"><summary>Can I use any script I find online?</summary><p>No. Review scripts before use and only use sources you trust. Never paste code that asks for your password, tokens, or other private information.</p></details>
-        </section>
-        <footer class="page-footer"><span>© 2024 XENO EXECUTOR</span><a href="#top">BACK TO TOP ↑</a></footer>
-      </article>
-    </div>
-  </main>
-  <script>
-const menuToggle = document.getElementById('menuToggle');
-const topnav = document.getElementById('topnav');
-
-menuToggle.addEventListener('click', () => {
-  const isOpen = topnav.classList.toggle('open');
-  menuToggle.setAttribute('aria-expanded', String(isOpen));
-});
-
-topnav.querySelectorAll('a').forEach((link) => {
-  link.addEventListener('click', () => {
-    topnav.classList.remove('open');
-    menuToggle.setAttribute('aria-expanded', 'false');
-  });
-});
-
-document.querySelectorAll('.copy-button').forEach((button) => {
-  button.addEventListener('click', async () => {
-    const text = button.closest('.code-card').querySelector('pre code').textContent;
-    try {
-      await navigator.clipboard.writeText(text);
-    } catch {
-      const fallback = document.createElement('textarea');
-      fallback.value = text;
-      fallback.setAttribute('readonly', '');
-      fallback.style.position = 'fixed';
-      fallback.style.opacity = '0';
-      document.body.appendChild(fallback);
-      fallback.select();
-      const copied = document.execCommand('copy');
-      fallback.remove();
-      if (!copied) {
-        button.textContent = 'Select code';
-        window.setTimeout(() => { button.textContent = 'Copy'; }, 1600);
-        return;
-      }
-    }
-    button.textContent = 'Copied';
-    window.setTimeout(() => { button.textContent = 'Copy'; }, 1600);
-  });
-});
-
-const sections = [...document.querySelectorAll('.doc-section')];
-const sectionLinks = [...document.querySelectorAll('.side-link')];
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (!entry.isIntersecting) return;
-    sectionLinks.forEach((link) => {
-      link.classList.toggle('active', link.hash === `#${entry.target.id}`);
-    });
-  });
-}, { rootMargin: '-20% 0px -65% 0px' });
-sections.forEach((section) => observer.observe(section));
-  </script>
-</body>
-</html>
+        print("press")
+    end
+})</div><table class="params"><tbody><tr><td><code>Name</code></td><td>string</td><td>Binding label.</td></tr><tr><td><code>Default</code></td><td>Enum.KeyCode</td><td>Default keyboard key.</td></tr><tr><td><code>Hold</code></td><td>boolean</td><td>Whether the bind uses hold behavior, if supported.</td></tr><tr><td><code>Callback</code></td><td>function</td><td>Function triggered by the binding.</td></tr></tbody></table></article></section>
+<section class="section" id="dropdown"><h2>Dropdown</h2><article class="card"><div class="cardhead"><h3><code>AddDropdown(options)</code></h3><span class="tag">Selection</span></div><p class="desc">Creates a menu for selecting from a list of options. The callback receives the selected value.</p><div class="sig">local Dropdown = Tab:AddDropdown({
+    Name = "Dropdown",
+    Default = "1",
+    Options = { "1", "2" },
+    Callback = function(Value)
+        print(Value)
+    end
+})</div><table class="params"><tbody><tr><td><code>Name</code></td><td>string</td><td>Dropdown label.</td></tr><tr><td><code>Default</code></td><td>string / value</td><td>Initial selected option.</td></tr><tr><td><code>Options</code></td><td>table</td><td>List of selectable options.</td></tr><tr><td><code>Callback</code></td><td>function(Value)</td><td>Called with the selected value.</td></tr></tbody></table></article></section>
+<section class="section" id="refresh"><h2>Refresh dropdown options</h2><article class="card"><div class="cardhead"><h3><code>Dropdown:Refresh(list, selectFirst)</code></h3><span class="tag">Utility</span></div><p class="desc">The snippet indicates a refresh method for replacing the dropdown's option list. Assign the result of <code>AddDropdown</code> to a variable before calling this method.</p><div class="sig">local List = { "Alpha", "Beta", "Gamma" }
+Dropdown:Refresh(List, true)</div><table class="params"><tbody><tr><td><code>list</code></td><td>table</td><td>New list of options.</td></tr><tr><td><code>selectFirst</code></td><td>boolean</td><td>Passed as <code>true</code> in your example; confirm whether this selects the first option in your implementation.</td></tr></tbody></table></article></section>
+<section class="section" id="destroy"><h2>Destroy</h2><article class="card"><div class="cardhead"><h3><code>Destroy()</code></h3><span class="tag">Lifecycle</span></div><p class="desc">Your snippet includes a destroy call to remove the UI. Call it on the actual library object if Xen0 UI implements this method.</p><div class="sig">Xen0UI:Destroy()</div><div class="note warning">Your pasted example says <code>OrionLib:Destroy()</code>. That looks like a leftover variable name from another library. For Xen0 UI, verify whether the correct call is <code>Xen0UI:Destroy()</code> or a method on the window object.</div></article></section>
+<section class="section" id="notes"><h2>Implementation notes</h2><div class="card"><ul style="color:#b3c0cd;padding-left:20px"><li>Keep the library variable names consistent. In the dropdown example, save the returned dropdown as <code>local Dropdown = Tab:AddDropdown(...)</code> before refreshing it.</li><li>The API snippet does not show the return value or exact behavior of every method, so confirm these details in the source before treating this page as final API documentation.</li><li>Only run code from sources you trust, and avoid publishing private configuration paths or credentials.</li></ul></div></section>
+<footer class="footer">Xen0 UI · Silver Surfer documentation concept · Built from the API example provided. Unverified behavior is marked for confirmation.</footer></main></div>
+<script>
+const menuBtn=document.getElementById('menuBtn'),sidebar=document.getElementById('sidebar');if(menuBtn)menuBtn.addEventListener('click',()=>sidebar.classList.toggle('open'));
+document.querySelectorAll('.copy').forEach(btn=>btn.addEventListener('click',async()=>{const code=btn.parentElement.querySelector('code');try{await navigator.clipboard.writeText(code.innerText);btn.textContent='Copied!';setTimeout(()=>btn.textContent='Copy',1200)}catch(e){btn.textContent='Select code';setTimeout(()=>btn.textContent='Copy',1200)}}));
+const links=[...document.querySelectorAll('.nav a')];const sections=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id))}}),{rootMargin:'-18% 0px -72% 0px'});sections.forEach(s=>obs.observe(s));
+</script></body></html>
