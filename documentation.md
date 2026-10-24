@@ -1,5 +1,5 @@
-# Orion Library
-This documentation is for the stable release of Orion Library.
+# Xen0 Library
+This documentation is for the stable release of Xen0 Library.
 
 ## Booting the Library
 ```lua
