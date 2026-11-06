@@ -12,7 +12,8 @@ local Xen0UI = loadstring(game:HttpGet("https://raw.githubusercontent.com/ui-01/
 ```lua
 local Window = Xen0UI:MakeWindow({
 	Name = "Title of the library",
-	HidePremium = false, SaveConfig = true,
+	HidePremium = false,
+	SaveConfig = true,
 	ConfigFolder = "DBZbestanimeOAT"
 })
 ```
